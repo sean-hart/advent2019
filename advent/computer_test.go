@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func TestResetComputer(t *testing.T) {
-	for _, tc := range testCasesResetComputer {
-		actual := ResetComputer(tc.input)
+func TestRunComputer(t *testing.T) {
+	for _, tc := range testCasesRunComputer {
+		actual := RunComputer(tc.input)
 		if !SliceEqual(actual, tc.expected) {
 			t.Fatalf("FAIL: %v Expected: %v Actual: %v", tc.description, tc.expected, actual)
 		}
@@ -14,10 +14,10 @@ func TestResetComputer(t *testing.T) {
 	}
 }
 
-func BenchmarkResetComputer(b *testing.B) {
+func BenchmarkRunComputer(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, tc := range testCasesResetComputer {
-			ResetComputer(tc.input)
+		for _, tc := range testCasesRunComputer {
+			RunComputer(tc.input)
 		}
 	}
 }

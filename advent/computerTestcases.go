@@ -1,6 +1,6 @@
 package main
 
-var testCasesResetComputer = []struct {
+var testCasesRunComputer = []struct {
 	description string
 	input       []int
 	expected    []int
