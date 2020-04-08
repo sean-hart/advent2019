@@ -1,5 +1,7 @@
 # Advent Calendar 2019
 
+"If yer gonna recurse, drink beer first." - Sparhawk
+
 ## Contributing
 
 1. Fork to your own repo
