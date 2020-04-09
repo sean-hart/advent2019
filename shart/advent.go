@@ -1,11 +1,11 @@
 package main
 
-import (
-	"fmt"
-)
+// import (
+// 	"fmt"
+// )
 
-func main() {
-	totalFuel := GetFuelTotal(inputMasses)
-	fmt.Println(totalFuel)
-	fmt.Println(RunComputer(computerInput))
-}
+// func main() {
+// 	totalFuel := GetFuelTotal(inputMasses)
+// 	fmt.Println(totalFuel)
+// 	fmt.Println(RunComputer(computerInput))
+// }
