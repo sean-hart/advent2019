@@ -31,6 +31,21 @@ func GetManhattanDistance(inputString string) (lowestDistance int) {
 
 // ShortestWireSum will calculate the earliest crossing of two wire paths
 func ShortestWireSum(inputString string) (lowestDistance int) {
+	wires := strings.Split(inputString, "\n")
+	wire1coords := ExpandRoute(wires[0])
+	wire2coords := ExpandRoute(wires[1])
+
+	for i1, coord1 := range wire1coords {
+		for i2, coord2 := range wire2coords {
+			if coord1 == coord2 {
+				if lowestDistance == 0 {
+					lowestDistance = i1 + i2 + 2
+				} else if i1+i2+2 < lowestDistance {
+					lowestDistance = i1 + i2
+				}
+			}
+		}
+	}
 	return lowestDistance
 }
 

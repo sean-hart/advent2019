@@ -86,12 +86,12 @@ var testCasesShortestWireSum = []struct {
 	{
 		description: "1x1",
 		input:       "R1,U1\nU1,R1",
-		expected:    1,
+		expected:    4,
 	},
 	{
 		description: "2x2",
 		input:       "L2,D2\nD2,L2",
-		expected:    2,
+		expected:    8,
 	},
 	{
 		description: "First Given Example",
@@ -100,12 +100,12 @@ var testCasesShortestWireSum = []struct {
 	},
 	{
 		description: "Second Given Example",
-		input:       "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51",
+		input:       "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 		expected:    410,
 	},
 	{
 		description: "challenge1",
 		input:       day03Input,
-		expected:    1,
+		expected:    14746,
 	},
 }
