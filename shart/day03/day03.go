@@ -2,6 +2,7 @@ package main
 
 import (
 	// "fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -12,23 +13,47 @@ type Coord struct {
 }
 
 // GetManhattanDistance will get the Manhattan Distance for two points
-func GetManhattanDistance(inputString string) (distance int) {
+func GetManhattanDistance(inputString string) (lowestDistance int) {
+	intersections := FindIntersections(inputString)
+	for _, intersection := range intersections {
+		// fmt.Printf("Intersection: %v", intersection)
+		tempDistance := int(math.Abs(float64(intersection.x)) + math.Abs(float64(intersection.y)))
+		if lowestDistance == 0 {
+			lowestDistance = tempDistance
+		} else {
+			if tempDistance < lowestDistance {
+				lowestDistance = tempDistance
+			}
+		}
+	}
+	return int(lowestDistance)
+}
 
-	return 1
+// ShortestWireSum will calculate the earliest crossing of two wire paths
+func ShortestWireSum(inputString string) (lowestDistance int) {
+	return lowestDistance
 }
 
 // FindIntersections finds all intersections for two sets of directions
-func FindIntersections(inputString string) (coords []Coord) {
+func FindIntersections(inputString string) (sharedCoords []Coord) {
+	wires := strings.Split(inputString, "\n")
+	wire1coords := ExpandRoute(wires[0])
+	wire2coords := ExpandRoute(wires[1])
 
-	return []Coord{Coord{1, 2}}
+	for _, coord1 := range wire1coords {
+		for _, coord2 := range wire2coords {
+			if coord1 == coord2 {
+				sharedCoords = append(sharedCoords, coord1)
+			}
+		}
+	}
+
+	return sharedCoords
 }
 
 //ExpandRoute will give all of the points on the grid.
-func ExpandRoute(inputString string) []Coord {
+func ExpandRoute(inputString string) (route []Coord) {
 	instructions := strings.Split(inputString, ",")
-	var origin = Coord{0, 0}
-	var route []Coord
-	route = append(route, origin)
 	current := Coord{0, 0}
 	for _, inst := range instructions {
 		direction := inst[:1]
