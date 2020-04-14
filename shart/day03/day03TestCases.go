@@ -28,3 +28,62 @@ var testCasesManhattanDistances = []struct {
 		expected:    12,
 	},
 }
+
+var testCasesFindIntersections = []struct {
+	description string
+	input       string
+	expected    []Coord
+}{
+	{
+		description: "1x1",
+		input:       "R1, U1\nU1R1",
+		expected:    []Coord{Coord{1, 1}},
+	},
+	{
+		description: "First Given Example",
+		input:       "R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83",
+		expected:    []Coord{Coord{1, 1}},
+	},
+	{
+		description: "Second Given Example",
+		input:       "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
+		expected:    []Coord{Coord{1, 1}},
+	},
+	{
+		description: "challenge1",
+		input:       day03Input,
+		expected:    []Coord{Coord{1, 1}},
+	},
+}
+
+var testCasesExpandRoute = []struct {
+	description string
+	input       string
+	expected    []Coord
+}{
+	{
+		description: "1x1",
+		input:       "R1,U1",
+		expected:    []Coord{Coord{0, 0}, Coord{1, 0}, Coord{1, 1}},
+	},
+	{
+		description: "2x2",
+		input:       "R2,U2",
+		expected:    []Coord{Coord{0, 0}, Coord{1, 0}, Coord{2, 0}, Coord{2, 1}, Coord{2, 2}},
+	},
+	// {
+	// 	description: "First Given Example",
+	// 	input:       "R75,D30,R83,U83,L12,D49,R71,U7,L72",
+	// 	expected:    []Coord{Coord{1, 1}},
+	// },
+	// {
+	// 	description: "Second Given Example",
+	// 	input:       "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51",
+	// 	expected:    []Coord{Coord{1, 1}},
+	// },
+	// {
+	// 	description: "challenge1",
+	// 	input:       strings.Split(day03Input, "\n")[0],
+	// 	expected:    []Coord{Coord{0, 0}, Coord{1, 0}, Coord{1, 1}},
+	// },
+}
