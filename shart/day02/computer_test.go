@@ -11,7 +11,7 @@ func TestRunComputer(t *testing.T) {
 		newInput := make([]int, len(tc.input))
 		copy(newInput, tc.input)
 		actual, _ := RunComputer(newInput, 0)
-		assert.Equal(t, actual, tc.expected)
+		assert.Equal(t, tc.expected, actual)
 		t.Logf("PASS: %s", tc.description)
 	}
 }
