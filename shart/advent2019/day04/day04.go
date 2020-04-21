@@ -22,22 +22,27 @@ func GetAllPasswords(inputString string) (validPasswords []int) {
 // valid password.
 func ValidatePassword(inputInteger int) bool {
 	inputSlice := strings.Split(strconv.Itoa(inputInteger), "")
-	doubles := false
+	// doubles := false
 	if len(inputSlice) != 6 {
 		return false
 	}
+
+	var groups = make(map[int]int)
+	firstDigit, _ := strconv.Atoi(inputSlice[0])
+	groups[firstDigit] = 1
+
 	for i := 1; i < 6; i++ {
 		current, _ := strconv.Atoi(inputSlice[i])
 		previous, _ := strconv.Atoi(inputSlice[i-1])
-		if current == previous {
-			doubles = true
-		}
+		groups[current] = groups[current] + 1
 		if current < previous {
 			return false
 		}
 	}
-	if doubles {
-		return true
+	for _, v := range groups {
+		if v == 2 {
+			return true
+		}
 	}
 	return false
 }
