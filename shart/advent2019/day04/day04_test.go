@@ -40,10 +40,10 @@ var _ = Describe("Day 04", func() {
 					actual := ValidatePassword(111111)
 					Expect(actual).To(Equal(true))
 				})
-				// By("Being a two in the final spot", func() {
-				// 	actual := ValidatePassword(111112)
-				// 	Expect(actual).To(Equal(true))
-				// })
+				By("Being a two in the final spot", func() {
+					actual := ValidatePassword(111112)
+					Expect(actual).To(Equal(true))
+				})
 			})
 		})
 		Context("with a password with no doubles", func() {
