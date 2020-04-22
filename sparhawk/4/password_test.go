@@ -20,7 +20,7 @@ func TestValidPassword(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run("Checking Password Validator", func(t *testing.T){
-			got := validPassword(tc.input)
+			got := validPassword(tc.input, checkLength, checkAdjacentPair, checkNotDecrementing)
 			if got != tc.want {
 				t.Errorf("Got %t, wanted %t", got, tc.want)
 			}
@@ -75,8 +75,31 @@ func TestCheckAdjacentPair(t *testing.T) {
 	}
 }
 
+func TestCheckHasDouble(t *testing.T) {
+	type test struct {
+		input []int
+		want bool
+	}
 
-func testCheckLength(t *testing.T) {
+	tests := []test {
+		{input: []int{1,2,3,4,5,6}, want: false},
+		{input: []int{1,1,1,1,1,1}, want: false},
+		{input: []int{1,1,1,1,2,2}, want: true},
+		{input: []int{6,5,4,3,2,1}, want: false},
+		{input: []int{1,2,3,4,5,5}, want: true},
+	}
+
+	for _, tc := range tests {
+		t.Run("Check has pair of 2 but not more", func(t *testing.T){
+			got := checkHasDouble(tc.input)
+			if got != tc.want {
+				t.Errorf("Got %t, wanted %t", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestCheckLength(t *testing.T) {
 	type test struct {
 		input []int
 		want bool
@@ -84,8 +107,8 @@ func testCheckLength(t *testing.T) {
 
 	tests := []test {
 		{input: []int{1}, want: false},
-		{input: []int{1,2,3,4,5}, want: true},
-		{input: []int{1,2,3,4,5,6}, want: false},
+		{input: []int{1,2,3,4,5}, want: false},
+		{input: []int{1,2,3,4,5,6}, want: true},
 		{input: []int{1,2,3,4,5,6,7}, want: false},
 		{input: []int{}, want: false},
 	}
@@ -136,6 +159,29 @@ func TestDriverPart1(t *testing.T) {
 	for _, tc := range tests {
 		t.Run("Checking how many possible keys", func(t *testing.T){
 			got := len(getKeys(tc.min, tc.max))
+			if got != tc.want {
+				t.Errorf("Got %d, wanted %d", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestDriverPart2(t *testing.T) {
+	type test struct {
+		min int
+		max int
+		want int
+	}
+	
+	tests := []test {
+		{min: 111111, max: 111112, want:0},
+		{min: 111122, max: 111123, want:1},
+		{min: 264793, max: 803935, want:628},
+	}
+
+	for _, tc := range tests {
+		t.Run("Checking how many possible keys", func(t *testing.T){
+			got := len(getKeys2(tc.min, tc.max))
 			if got != tc.want {
 				t.Errorf("Got %d, wanted %d", got, tc.want)
 			}

@@ -1,21 +1,12 @@
 package password
 
-// import (
-// 	"fmt"
-// )
-
-func validPassword(password int) bool {
+func validPassword(password int, checkers ...func([]int) bool) bool {
 	numSlice := intToSlice(password)
-	if !checkLength(numSlice) {
-		return false
+	for _,check := range checkers {
+		if !check(numSlice) {
+			return false
+		}
 	}
-	if !checkAdjacentPair(numSlice) {
-		return false
-	}
-	if !checkNotDecrementing(numSlice) {
-		return false
-	}
-	
 	return true
 }
 
@@ -45,16 +36,56 @@ func checkAdjacentPair(password []int) bool {
 	return false
 }
 
+func checkHasDouble(password []int) bool {
+	var counts []int
+	lastDigit := password[0]
+	counter := 1
+
+	for _, digit := range password[1:] {
+		
+		if digit == lastDigit {
+			counter++
+		} else {
+			counts = append(counts, counter)
+			counter = 1
+		}
+		lastDigit = digit
+	}
+	counts = append(counts, counter)
+
+	for _, count := range counts {
+		if count == 2 {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Part 1 checks 
 func getKeys(min int, max int) []int {
 	keys := []int{}
 	
 	for i := min; i <= max; i++ {
-		if validPassword(i) {
+		if validPassword(i, checkLength, checkAdjacentPair, checkNotDecrementing) {
 			keys = append(keys, i)
 		}
 	}
 	return keys
 }
+
+// Part 2 checks 
+func getKeys2(min int, max int) []int {
+	keys := []int{}
+	
+	for i := min; i <= max; i++ {
+		if validPassword(i, checkLength, checkAdjacentPair, checkNotDecrementing, checkHasDouble) {
+			keys = append(keys, i)
+		}
+	}
+	return keys
+}
+
 
 func intToSlice(num int) []int {
 	res := []int{}
