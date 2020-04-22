@@ -34,14 +34,27 @@ func ShortestWireSum(inputString string) (lowestDistance int) {
 	wires := strings.Split(inputString, "\n")
 	wire1coords := ExpandRoute(wires[0])
 	wire2coords := ExpandRoute(wires[1])
+	lowestDistance = len(wire1coords) + len(wire2coords)
+	// intersections := FindIntersections(inputString)
+
+	// use instructionset to figure out how you got to the intersection
+	// maybe try closest wire1 intersection first?
+	// maybe try the shortest manhattan first? -- already faster than manhattan so eff that
+	// maybe try the first intersection?
+	// expand route to intersections?
+	// if coord1 in intersections: slice wires to coords?
 
 	for i1, coord1 := range wire1coords {
-		for i2, coord2 := range wire2coords {
-			if coord1 == coord2 {
-				if lowestDistance == 0 {
-					lowestDistance = i1 + i2 + 2
-				} else if i1+i2+2 < lowestDistance {
-					lowestDistance = i1 + i2
+		if i1+1 < lowestDistance {
+			for i2, coord2 := range wire2coords {
+				if i1+i2+2 < lowestDistance {
+					if coord1 == coord2 {
+						if i2 < lowestDistance {
+							if i1+i2+2 < lowestDistance {
+								lowestDistance = i1 + i2 + 2
+							}
+						}
+					}
 				}
 			}
 		}

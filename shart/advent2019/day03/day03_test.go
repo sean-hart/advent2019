@@ -58,7 +58,7 @@ func TestShortestWireSum(t *testing.T) {
 	}
 }
 
-func BenchmarkShortesWireSum(b *testing.B) {
+func BenchmarkShortestWireSum(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		for _, tc := range testCasesShortestWireSum {
 			ShortestWireSum(tc.input)
