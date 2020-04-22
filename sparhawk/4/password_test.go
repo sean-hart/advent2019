@@ -188,3 +188,23 @@ func TestDriverPart2(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkDriverPart2(b *testing.B) {
+	type test struct {
+		min int
+		max int
+		want int
+	}
+	
+	tests := []test {
+		{min: 111111, max: 111112, want:0},
+		{min: 111122, max: 111123, want:1},
+		{min: 264793, max: 803935, want:628},
+	}
+
+	for i:=0; i < b.N; i++ {
+		for _, tc := range tests {
+			getKeys2(tc.min, tc.max)
+		}
+	}
+}
