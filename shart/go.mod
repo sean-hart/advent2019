@@ -1,4 +1,4 @@
-module github.com/sean-hart/advent2019/shart/advent2019
+module github.com/sean-hart/advent2019/shart
 
 go 1.13
 
