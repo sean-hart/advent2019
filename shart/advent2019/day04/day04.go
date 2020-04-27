@@ -6,10 +6,12 @@ import (
 )
 
 // GetAllPasswords will get all valid passwords and return a slice.
+// O = n
 func GetAllPasswords(inputString string) (validPasswords []int) {
 	inputMinMax := strings.Split(inputString, "-")
 	min, _ := strconv.Atoi(inputMinMax[0])
 	max, _ := strconv.Atoi(inputMinMax[1])
+	// TODO: How can we filter here?
 	for i := min; i <= max; i++ {
 		if ValidatePassword(i) {
 			validPasswords = append(validPasswords, i)
@@ -20,9 +22,10 @@ func GetAllPasswords(inputString string) (validPasswords []int) {
 
 // ValidatePassword takes a 6 digit number and checks to see if it is a
 // valid password.
+// O = 2*6
 func ValidatePassword(inputInteger int) bool {
 	inputSlice := strings.Split(strconv.Itoa(inputInteger), "")
-	// doubles := false
+
 	if len(inputSlice) != 6 {
 		return false
 	}
