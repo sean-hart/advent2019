@@ -37,12 +37,12 @@ var testCasesFindIntersections = []struct {
 	{
 		description: "1x1",
 		input:       "R1,U1\nU1,R1",
-		expected:    []Coord{Coord{1, 1}},
+		expected:    []Coord{{1, 1}},
 	},
 	{
 		description: "2x2",
 		input:       "L2,D2\nD2,L2",
-		expected:    []Coord{Coord{-2, -2}},
+		expected:    []Coord{{-2, -2}},
 	},
 	// {
 	// 	description: "First Given Example",
@@ -69,12 +69,12 @@ var testCasesExpandRoute = []struct {
 	{
 		description: "1x1",
 		input:       "R1,U1",
-		expected:    []Coord{Coord{1, 0}, Coord{1, 1}},
+		expected:    []Coord{{1, 0}, {1, 1}},
 	},
 	{
 		description: "2x2",
 		input:       "R2,U2",
-		expected:    []Coord{Coord{1, 0}, Coord{2, 0}, Coord{2, 1}, Coord{2, 2}},
+		expected:    []Coord{{1, 0}, {2, 0}, {2, 1}, {2, 2}},
 	},
 }
 
