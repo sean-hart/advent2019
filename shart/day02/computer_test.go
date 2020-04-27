@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-
+	"github.com/sean-hart/advent2019/shart/libs"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,4 +44,19 @@ func makeRange(min, max int) []int {
 		a[i] = min + i
 	}
 	return a
+}
+
+func findPair(mem, available []int, desired int) (left, right int) {
+	for _, left := range available {
+		for _, right := range available {
+			newMem := libs.ResetMem(mem)
+			newMem[1] = left
+			newMem[2] = right
+			newMem, _ = RunComputer(newMem, 0)
+			if newMem[0] == desired {
+				return left, right
+			}
+		}
+	}
+	return
 }
