@@ -9,7 +9,7 @@ type parameters struct {
 }
 
 // RunComputer will run opcode till termination
-func RunComputer(memory []int, instructionPointer int) (output []int, nextPointer int) {
-	output, nextPointer = libs.RunComputer(memory, instructionPointer)
-	return output, nextPointer
+func RunComputer(input int, memory []int, instructionPointer int) ( output int, outMem []int, nextPointer int) {
+	output, outMem, nextPointer = libs.RunComputer(input, memory, instructionPointer)
+	return 0, outMem, nextPointer
 }

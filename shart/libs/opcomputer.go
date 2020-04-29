@@ -9,26 +9,25 @@ type Parameters struct {
 
 // RunComputer will run opcode till termination
 func RunComputer(inputInt int, memory []int, instructionPointer int) (outputInt int, outputMem []int, nextPointer int,) {
-	// if memory[instructionPointer] == 99 {
-	// 	return outputInt, memory, 99
-	// }
-	opcode := memory[instructionPointer]
-	// rawParams := memory[instructionPointer+1 : instructionPointer+4]
-	// inst := Parameters{rawParams[0], rawParams[1], rawParams[2]}
-	// nextPointer := instructionPointer
+	// opcode := memory[instructionPointer]
+	digits := GetDigits(memory[instructionPointer])
+	opcode := digits[0] + (digits[1] * 10)
+
+	// parameterModes := []int{digits[4], digits[3], digits[2]}
+	parameterModes := []int{digits[2], digits[3], digits[4]}
 
 	switch {
 	case opcode == 99:
 		return outputInt, memory, 99
 	case opcode == 1:
 		rawParams := getParams(3, memory, instructionPointer)
-		inst := Parameters{rawParams[0], rawParams[1], rawParams[2]}
-		memory[inst.storeReg] = memory[inst.leftReg] + memory[inst.rightReg]
+		parsedParams := ParseParams(rawParams, parameterModes, memory)
+		memory[rawParams[2]]= parsedParams[0] + parsedParams[1]
 		nextPointer = instructionPointer + 4
 	case opcode == 2:
 		rawParams := getParams(3, memory, instructionPointer)
-		inst := Parameters{rawParams[0], rawParams[1], rawParams[2]}
-		memory[inst.storeReg] = memory[inst.leftReg] * memory[inst.rightReg]
+		parsedParams := ParseParams(rawParams, parameterModes, memory)
+		memory[rawParams[2]]= parsedParams[0] * parsedParams[1]
 		nextPointer = instructionPointer + 4
 	case opcode == 3:
 		rawParams := getParams(1, memory, instructionPointer)
@@ -36,19 +35,16 @@ func RunComputer(inputInt int, memory []int, instructionPointer int) (outputInt 
 		nextPointer = instructionPointer + 2
 	case opcode == 4:
 		rawParams := getParams(1, memory, instructionPointer)
-		outputInt = memory[rawParams[0]]
+		parsedParams := ParseParams(rawParams, parameterModes, memory)
+		outputInt = parsedParams[0]
 		nextPointer = instructionPointer + 2
-	case opcode >= 100:
-		switch {
-			
-		}
-		return 0, memory, 99
 	}
 	if memory[nextPointer] != 99 {
 		outputInt, memory, nextPointer = RunComputer(inputInt, memory, nextPointer)
 	}
 	return outputInt, memory, 99
 }
+
 
 //ResetMem will reset memory to a known state.
 func ResetMem(memory []int) (newMem []int) {
@@ -74,4 +70,16 @@ func GetDigits(number int) (digits []int){
 	}
 
 	return digits
+}
+
+// ParseParams determines the actual value based on mode.
+func ParseParams(params, paramModes, memory []int) (parsedParams []int) {
+	for i, param := range params {
+		if paramModes[i] == 1 {
+			parsedParams = append(parsedParams, param)
+		} else {
+			parsedParams = append(parsedParams, memory[param])
+		}
+	}
+	return parsedParams
 }

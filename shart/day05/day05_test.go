@@ -2,7 +2,7 @@ package day05_test
 
 import (
 	"testing"
-
+	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
@@ -13,25 +13,60 @@ var day05Input = []int{3, 225, 1, 225, 6, 6, 1100, 1, 238, 225, 104, 0, 1002, 14
 
 func TestDay05(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Day 04")
+	RunSpecs(t, "Day 05")
 }
 
-// func BenchmarkDay5(b *testing.B) {
-// 	for i := 0; i < b.N; i++ {
-// 		RunProgram(day05Input)
-// 	}
-// }
+func BenchmarkDay5(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RunProgram(1, day05Input, 0)
+	}
+}
 
 var _ = Describe("Day 05 pt 1 - Output tests", func() {
-	DescribeTable("With Known Good",
-		func(inputInt int, memory []int, expectedOutput int) {
-			output, _, _ := RunProgram(inputInt, memory, 0)
-			Expect(output).To(Equal(expectedOutput))
-		},
-		Entry("parameter mode 000", 0, []int{3, 0, 4, 0, 99}, 0),
-		Entry("parameter mode 000 with nonzero input", 1, []int{3, 0, 4, 0, 99}, 1),
-		Entry("parametermode 010", 0, []int{1002, 4, 3, 4, 33}, 0),
-		Entry("parameter mode 011", 0, []int{1101, 100, -1, 4, 0}, 0),
-		Entry("Challenge Input", 1, day05Input, 2000),
-	)
+	Context("Reading Output", func() {
+		DescribeTable("Output",
+			func(inputInt int, memory []int, expectedOutput int) {
+				output, _, _ := RunProgram(inputInt, memory, 0)
+				Expect(output).To(Equal(expectedOutput))
+			},
+			Entry("parameter mode 000", 0, []int{3, 0, 4, 0, 99}, 0),
+			Entry("parameter mode 000 with nonzero input", 1, []int{3, 0, 4, 0, 99}, 1),
+			Entry("parametermode 010", 0, []int{1002, 4, 3, 4, 33}, 0),
+			Entry("parameter mode 011", 0, []int{1101, 100, -1, 4, 0}, 0),
+			Entry("Challenge Input", 1, day05Input, 7566643),
+		)
+	})
+
+	Context("Reading Memory", func() {
+		DescribeTable("Memory",
+			func(inputInt int, memory []int, expectedOutput []int) {
+				_, memoryOut, _ := RunProgram(inputInt, memory, 0)
+				fmt.Println(memory)
+				Expect(memoryOut).To(Equal(expectedOutput))
+			},
+			Entry("parameter mode 000", 0, []int{3, 0, 4, 0, 99}, []int{0, 0, 4, 0, 99}), //good
+			Entry("parameter mode 000 with nonzero input", 1, []int{3, 0, 4, 0, 99}, []int{1, 0, 4, 0, 99}), //good
+			Entry("parameter mode 010", 0, []int{1002, 4, 3, 4, 33}, []int{1002, 4, 3, 4, 99}),
+			Entry("parameter mode 010", 0, []int{1004, 2, 99}, []int{1004, 2, 99}),
+			Entry("parameter mode 011", 0, []int{1101, 100, -1, 4, 0}, []int{1101, 100, -1, 4, 99}),
+			// Entry("Challenge Input", 1, day05Input, 2000),
+		)
+	})
+
+	// }),
+	// Context("Checking Memory", func() {
+	// 	DescribeTable("With Known Good",
+	// 		func(inputInt int, memory []int, expectedOutput int) {
+	// 			_, memoryOut, _ := RunProgram(inputInt, memory, 0)
+	// 			Expect(memoryOut).To(Equal(expectedOutput))
+	// 		},
+	// 		Entry("parameter mode 000", 0, []int{3, 0, 4, 0, 99}, []int{0, 0, 4, 0, 99}), //good
+	// 		Entry("parameter mode 000 with nonzero input", 1, []int{3, 0, 4, 0, 99}, []int{1, 0, 4, 0, 99}), //good
+	// 		// Entry("parameter mode 010", 0, []int{1002, 4, 3, 4, 33}, 0),
+	// 		// Entry("parameter mode 010", 0, []int{1004, 2, 99}, 2),
+	// 		// Entry("parameter mode 011", 0, []int{1101, 100, -1, 4, 0}, 0),
+	// 		// Entry("Challenge Input", 1, day05Input, 2000),
+	// 	)
+	// })
+
 })
