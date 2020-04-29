@@ -1,15 +1,8 @@
 package libs
 
-import "fmt"
-
-// Parameters hold the instructions for the computer.
-
 // RunComputer will run opcode till halt.
 func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutput int) (outputInt int, outputMem []int, nextPointer int) {
-	// fmt.Println(memory)
-	// digits := GetDigits(memory[instructionPointer])
 	opcode := memory[instructionPointer] % 100
-	// fmt.Println(opcode)
 	parameterModes := GetDigits(memory[instructionPointer] / 100)
 
 	switch {
@@ -40,7 +33,6 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 		//output = p1
 		rawParams := getParams(1, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
-		fmt.Printf("Raw: %v, Parsed: %v, Modes: %v instruction: %v\n", rawParams, parsedParams, parameterModes, memory[instructionPointer])
 		outputInt = parsedParams[0]
 		nextPointer = instructionPointer + 2
 
@@ -86,11 +78,7 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 		}
 		nextPointer = instructionPointer + 4
 	}
-	// fmt.Println(nextPointer)
-	// fmt.Println(outputInt)
-	if len(memory) > 223 {
-		fmt.Println(memory[223], memory[224])
-	}
+
 	if outputInt == 0 {
 		outputInt = currentOutput
 	}
