@@ -7,36 +7,45 @@ import "fmt"
 // RunComputer will run opcode till halt.
 func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutput int) (outputInt int, outputMem []int, nextPointer int) {
 	// fmt.Println(memory)
-	digits := GetDigits(memory[instructionPointer])
-	opcode := digits[0] + (digits[1] * 10)
+	// digits := GetDigits(memory[instructionPointer])
+	opcode := memory[instructionPointer] % 100
 	// fmt.Println(opcode)
-
-	parameterModes := digits[2:]
+	parameterModes := GetDigits(memory[instructionPointer] / 100)
 
 	switch {
 	case opcode == 99:
 		return outputInt, memory, 99
+
 	case opcode == 1:
+		// p3 = p1 + p2
 		rawParams := getParams(3, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		memory[rawParams[2]] = parsedParams[0] + parsedParams[1]
 		nextPointer = instructionPointer + 4
+
 	case opcode == 2:
+		// p3 = p1 * p2
 		rawParams := getParams(3, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		memory[rawParams[2]] = parsedParams[0] * parsedParams[1]
 		nextPointer = instructionPointer + 4
+
 	case opcode == 3:
+		//p1 = input
 		rawParams := getParams(1, memory, instructionPointer)
 		memory[rawParams[0]] = inputInt
 		nextPointer = instructionPointer + 2
+
 	case opcode == 4:
+		//output = p1
 		rawParams := getParams(1, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
-		fmt.Printf("Raw: %v, Parsed: %v, Modes: %v\n", rawParams, parsedParams, parameterModes)
+		fmt.Printf("Raw: %v, Parsed: %v, Modes: %v instruction: %v\n", rawParams, parsedParams, parameterModes, memory[instructionPointer])
 		outputInt = parsedParams[0]
 		nextPointer = instructionPointer + 2
+
 	case opcode == 5:
+		//jumpto if p1 != 0
 		rawParams := getParams(2, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		if parsedParams[0] != 0 {
@@ -44,7 +53,9 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 		} else {
 			nextPointer = instructionPointer + 3
 		}
+
 	case opcode == 6:
+		//jumpto if p1 == 0
 		rawParams := getParams(2, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		if parsedParams[0] == 0 {
@@ -52,7 +63,9 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 		} else {
 			nextPointer = instructionPointer + 3
 		}
+
 	case opcode == 7:
+		//if p1 < p2 set p3 to 1 else 0
 		rawParams := getParams(3, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		if parsedParams[0] < parsedParams[1] {
@@ -62,6 +75,7 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 		}
 		nextPointer = instructionPointer + 4
 	case opcode == 8:
+		// if p1 == p2 set p3 to 1 else 0
 		rawParams := getParams(3, memory, instructionPointer)
 		parsedParams := ParseParams(rawParams, parameterModes, memory)
 		// fmt.Printf("Parsed0: %v, Parsed1: %v", parsedParams[0], parsedParams[1])
@@ -74,6 +88,9 @@ func RunComputer(inputInt int, memory []int, instructionPointer int, currentOutp
 	}
 	// fmt.Println(nextPointer)
 	// fmt.Println(outputInt)
+	if len(memory) > 223 {
+		fmt.Println(memory[223], memory[224])
+	}
 	if outputInt == 0 {
 		outputInt = currentOutput
 	}
@@ -103,7 +120,7 @@ func GetDigits(number int) (digits []int) {
 		number = number / 10
 	}
 
-	for len(digits) < 5 {
+	for len(digits) < 3 {
 		digits = append(digits, 0)
 	}
 
