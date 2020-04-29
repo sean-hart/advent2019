@@ -10,7 +10,7 @@ func TestRunComputer(t *testing.T) {
 	for _, tc := range testCasesRunComputer {
 		newInput := make([]int, len(tc.input))
 		copy(newInput, tc.input)
-		actual, _ := RunComputer(newInput, 0)
+		_, actual, _ := RunComputer(0, newInput, 0)
 		assert.Equal(t, tc.expected, actual)
 		t.Logf("PASS: %s", tc.description)
 	}
@@ -21,7 +21,7 @@ func BenchmarkRunComputer(b *testing.B) {
 		for _, tc := range testCasesRunComputer {
 			newInput := make([]int, len(tc.input))
 			copy(newInput, tc.input)
-			RunComputer(newInput, 0)
+			RunComputer(0, newInput, 0)
 		}
 	}
 }
@@ -52,7 +52,7 @@ func findPair(mem, available []int, desired int) (left, right int) {
 			newMem := libs.ResetMem(mem)
 			newMem[1] = left
 			newMem[2] = right
-			newMem, _ = RunComputer(newMem, 0)
+			_, newMem, _ = RunComputer(0, newMem, 0)
 			if newMem[0] == desired {
 				return left, right
 			}
