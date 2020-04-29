@@ -34,13 +34,14 @@ func RunComputer(inputInt int, memory []int, instructionPointer int) (outputInt 
 		rawParams := getParams(1, memory, instructionPointer)
 		memory[rawParams[0]] = inputInt
 		nextPointer = instructionPointer + 2
-		// fmt.Println(memory, nextPointer)
 	case opcode == 4:
 		rawParams := getParams(1, memory, instructionPointer)
 		outputInt = memory[rawParams[0]]
 		nextPointer = instructionPointer + 2
 	case opcode >= 100:
-		// _, opcodeDigits := GetDigits(opcode)
+		switch {
+			
+		}
 		return 0, memory, 99
 	}
 	if memory[nextPointer] != 99 {
@@ -67,5 +68,10 @@ func GetDigits(number int) (digits []int){
 		digits = append(digits, number % 10)
 		number = number / 10
 	}
+	
+	for len(digits) < 5 {
+		digits = append(digits, 0)
+	}
+
 	return digits
 }

@@ -1,15 +1,15 @@
 package libs_test
 
 import (
+	"math"
+	"math/rand"
 	"testing"
+	"time"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
 	"github.com/sean-hart/advent2019/shart/libs"
-	"math/rand"
-	"math"
-	"time"
-
 )
 
 func TestLibs(t *testing.T) {
@@ -23,9 +23,10 @@ var _ = Describe("getDigits", func() {
 			digits := libs.GetDigits(inputInt)
 			Expect(digits).To(Equal(expected))
 		},
-		Entry("5", 5, []int{5}),
-		Entry("15", 15, []int{5,1}),
-		Entry("125", 125, []int{5,2,1}),
+		Entry("Under 10 - 5 should 0 fill", 5, []int{5, 0, 0, 0, 0}),
+		Entry("under 100 - 15 should 0 fill", 15, []int{5, 1, 0, 0, 0}),
+		Entry("under 1000 - 125 should 0 fill", 125, []int{5, 2, 1, 0, 0}),
+		Entry("Over 10000 - 123456789 should not 0 fill", 123456789, []int{9, 8, 7, 6, 5, 4, 3, 2, 1}),
 	)
 })
 
@@ -34,8 +35,8 @@ func BenchmarkDay5(b *testing.B) {
 		rand.Seed(time.Now().UnixNano())
 		min := 2
 		max := int(math.Pow(10, 9))
-		randomNumber := rand.Intn(max - min) + min
-		
+		randomNumber := rand.Intn(max-min) + min
+
 		libs.GetDigits(randomNumber)
 	}
 }
