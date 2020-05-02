@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/text/number"
 )
 
 func Test_verifyDigits(t *testing.T) {
@@ -55,14 +54,44 @@ func Benchmark_verifyDigits(b *testing.B) {
 	}
 }
 
+func Test_getDigits(t *testing.T) {
+	testCases := []struct {
+		num            int
+		expectedAnswer [6]int
+	}{
+		{
+			num:            123456,
+			expectedAnswer: [6]int{1, 2, 3, 4, 5, 6},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run("", func(t *testing.T) {
+			ans := getDigits(tc.num)
+			assert.Equal(t, tc.expectedAnswer, ans)
+		})
+	}
+}
+
+func Benchmark_getDigits(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		getDigits(278384)
+	}
+}
 func Test_adjacentDigits(t *testing.T) {
-	testCases := []struct{
-		num	int
+	testCases := []struct {
+		digits         [6]int
 		expectedAnswer bool
 	}{
 		{
-			num:	123455,
+			digits:         [6]int{1, 2, 3, 4, 5, 5},
 			expectedAnswer: true,
-		}
+		},
 	}
+	for _, tc := range testCases {
+		t.Run("", func(t *testing.T) {
+			ans := adjacentDigits(tc.digits)
+			assert.Equal(t, tc.expectedAnswer, ans)
+		})
+	}
+	
 }

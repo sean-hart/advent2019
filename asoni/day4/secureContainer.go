@@ -91,7 +91,8 @@ func calculateAnswerWithFilter(min int, max int) (count int) {
 func main() {
 	fmt.Println("Day 4: Secure Container")
 
-	input := "278384-824795"
+	// input := "278384-824795"
+	input := "264360-746325"
 	inputRange := strings.Split(input, "-")
 	min, _ := strconv.Atoi(inputRange[0])
 	max, _ := strconv.Atoi(inputRange[1])
