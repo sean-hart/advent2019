@@ -5,7 +5,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	. "github.com/sean-hart/advent2019/shart/advent2019/day04"
+	. "github.com/sean-hart/advent2019/shart/day04"
 )
 
 var day04Input string = "152085-670283"
