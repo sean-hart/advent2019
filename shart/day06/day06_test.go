@@ -22,6 +22,20 @@ E)J
 J)K
 K)L`
 
+var example2 = `COM)B
+B)C
+C)D
+D)E
+E)F
+B)G
+G)H
+D)I
+E)J
+J)K
+K)L
+K)YOU
+I)SAN`
+
 func TestDay06(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Day 06")
@@ -42,8 +56,24 @@ var _ = Describe("Day 06 pt 1 - Output tests", func() {
 			},
 			Entry("Example Orbits", example1, 42),
 			Entry("Very Simple", "COM)A\nA)B", 3),
-			Entry("Multiple Centers", "A)B\nB)C\nD)E\nE)F\nD)G", 7),
+			Entry("Linear", "COM)A)\nA)B\nB)C\nC)D\nD)E\nE)F", 21),
+			Entry("With Forks", "COM)A\nA)B\nB)C\nA)D\nD)E\nE)F\nD)G", 18),
+			Entry("Out of order", "A)B\nCOM)A", 3),
 			// 3825 is too low
+			// 7128 is too low
+			Entry("Challenge", challenge, 344238),
+		)
+	})
+})
+
+var _ = Describe("Day 06 pt 2 - Shortest distance", func() {
+	Context("Reading Output", func() {
+		DescribeTable("jump hops",
+			func(input string, expectedOutput int) {
+				output := CalcShortestJump(input, "SAN", "YOU")
+				Expect(output).To(Equal(expectedOutput))
+			},
+			Entry("Example", example2, 4),
 			Entry("Challenge", challenge, 200),
 		)
 	})
