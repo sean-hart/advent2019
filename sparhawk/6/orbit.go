@@ -6,7 +6,6 @@ import (
 
 type orbitTable struct {
 	childToParent map[string]string
-	parentToChildren map[string][]string
 }
 
 
