@@ -15,7 +15,6 @@ func buildOrbitTables(directOrbits []string) orbitTable {
 	
 	ot := orbitTable{
 		childToParent: make(map[string]string),
-		parentToChildren: make(map[string][]string),
 	}
 
 	for _, orbit := range directOrbits {
@@ -24,13 +23,6 @@ func buildOrbitTables(directOrbits []string) orbitTable {
 		_, ok := ot.childToParent[pair[1]]
 		if !ok {
 			ot.childToParent[pair[1]] = pair[0]
-		}
-
-		_, ok = ot.parentToChildren[pair[0]]
-		if !ok {
-			ot.parentToChildren[pair[0]] = []string{pair[1],}
-		} else {
-			ot.parentToChildren[pair[0]] = append(ot.parentToChildren[pair[0]], pair[1])
 		}
 
 	}
