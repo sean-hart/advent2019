@@ -26,7 +26,6 @@ func readCsvFile(filePath string) []string {
 		}
 		data = record
 	}
-	fmt.Println(data)
 	return data
 }
 
